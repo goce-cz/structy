@@ -1,0 +1,23 @@
+{
+  "name": "structy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/goce-cz/structy.git"
+  },
+  "author": "goce@goce.cz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/goce-cz/structy/issues"
+  },
+  "homepage": "https://github.com/goce-cz/structy#readme",
+  "devDependencies": {
+    "typescript": "^4.9.5",
+    "vitest": "^0.28.4"
+  }
+}
