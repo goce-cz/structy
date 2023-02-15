@@ -7,8 +7,18 @@ export interface Item {
   type: string;
   name: string;
   ppu: number;
+  financials: Financials;
   batters: Topping[];
   toppings: Topping[];
+}
+
+export interface Financials {
+  price: Price;
+}
+
+export interface Price {
+  gross: number;
+  net: number;
 }
 
 export interface Topping {
@@ -23,6 +33,12 @@ export const data: Data = {
       type: 'donut',
       name: 'Cake',
       ppu: 0.55,
+      financials: {
+        price: {
+          gross: 120,
+          net: 100
+        }
+      },
       batters:
         [
           { id: '1001', type: 'Regular' },

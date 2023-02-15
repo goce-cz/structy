@@ -4,24 +4,37 @@ export type Updater<P, C> = (parent: P, value: C) => P
 export interface Query<P, C> {
   resolve: Resolver<P, C>
   update: Updater<P, C>
+  toString: () => string
 }
 
 export const propertyQuery = <P extends object, K extends keyof P> (propertyName: K): Query<P, P[K]> => ({
   resolve: (parent) => parent[propertyName],
-  update: (parent, value) => ({ ...parent, [propertyName]: value })
+  update: (parent, value) => ({ ...parent, [propertyName]: value }),
+  toString: () => String(propertyName)
 })
 
 export const arrayIndexQuery = <P extends unknown[], I extends number> (elementIndex: I): Query<P, P[I]> => ({
   resolve: (parent) => parent[elementIndex],
-  update: (parent, value) => parent.map((element, index) => elementIndex === index ? value : element) as P
+  update: (parent, value) => parent.map((element, index) => elementIndex === index ? value : element) as P,
+  toString: () => `[${elementIndex}]`
+
 })
 
-export function arrayPredicateQuery <T, S extends T> (predicate: (value: T, index: number, obj: T[]) => value is S): Query<T[], S>
-export function arrayPredicateQuery <T> (predicate: (value: T, index: number, obj: T[]) => boolean): Query<T[], T>
+export function arrayPredicateQuery<T, S extends T> (predicate: (value: T, index: number, obj: T[]) => value is S): Query<T[], S>
+export function arrayPredicateQuery<T> (predicate: (value: T, index: number, obj: T[]) => boolean): Query<T[], T>
 export function arrayPredicateQuery (predicate: (value: unknown, index: number, obj: unknown[]) => boolean): Query<unknown[], unknown> {
   return {
     resolve: (parent) => parent.find(predicate),
-    update: (parent, value) => parent.map((element, index) => predicate(element, index, parent) ? value : element)
+    update: (parent, value) => parent.map((element, index) => predicate(element, index, parent) ? value : element),
+    toString: () => `[<predicate>]`
+  }
+}
+
+export function arrayMatchQuery<T, K extends Extract<keyof T, string>, V extends Extract<T[K], string | number>> (key: K, matchValue: V): Query<T[], T | undefined> {
+  return {
+    resolve: (parent) => parent.find(element => element[key] === matchValue),
+    update: (parent, value) => parent.map(element => element[key] === matchValue ? value! : element),
+    toString: () => `[${key}=${typeof matchValue === 'number' ? matchValue : `"${matchValue}"`}]`
   }
 }
 
@@ -39,7 +52,7 @@ export function chainQueries<P, T1, T2, T3> (query1: Query<P, T1>, query2: Query
 export function chainQueries<P, T1, T2, T3, T4> (query1: Query<P, T1>, query2: Query<T1, T2>, query3: Query<T2, T3>, query4: Query<T3, T4>): ChainedQuery<P, T4>
 export function chainQueries<P, T1, T2, T3, T4, T5> (query1: Query<P, T1>, query2: Query<T1, T2>, query3: Query<T2, T3>, query4: Query<T3, T4>, query5: Query<T4, T5>): ChainedQuery<P, T5>
 export function chainQueries<P, T1, T2, T3, T4, T5, T6> (query1: Query<P, T1>, query2: Query<T1, T2>, query3: Query<T2, T3>, query4: Query<T3, T4>, query5: Query<T4, T5>, query6: Query<T5, T6>): ChainedQuery<P, T6>
-export function chainQueries<P,C> (...queries: Query<unknown, unknown>[]): ChainedQuery<P, C>
+export function chainQueries<P, C> (...queries: Query<unknown, unknown>[]): ChainedQuery<P, C>
 export function chainQueries (...queries: Query<unknown, unknown>[]): ChainedQuery<unknown, unknown> {
   const resolve = (parent: unknown) => queries.reduce((lastParent, query) => query.resolve(lastParent), parent)
   const resolveChain = (parent: unknown, flatten: boolean) => {
@@ -54,7 +67,7 @@ export function chainQueries (...queries: Query<unknown, unknown>[]): ChainedQue
         chain.push(lastParent)
       }
     }
-    return chain as [unknown,...unknown[]]
+    return chain as [unknown, ...unknown[]]
   }
   return ({
     resolve,
@@ -67,7 +80,8 @@ export function chainQueries (...queries: Query<unknown, unknown>[]): ChainedQue
         lastValue = query.update(chain[i], lastValue)
       }
       return lastValue
-    }
+    },
+    toString: () => queries.join('.')
   })
 }
 
