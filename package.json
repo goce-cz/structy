@@ -20,6 +20,7 @@
     "@types/react": "^18.0.28",
     "@spicy-hooks/core": "^3.0.0",
     "@spicy-hooks/observables": "^3.0.0",
+    "@spicy-hooks/utils": "^3.0.0",
     "rxjs": "^7.8.0",
     "typescript": "^4.9.5",
     "vitest": "^0.28.4"
