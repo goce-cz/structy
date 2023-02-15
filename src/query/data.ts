@@ -3,7 +3,7 @@ export interface Data {
 }
 
 export interface Item {
-  id: string;
+  id: number;
   type: string;
   name: string;
   ppu: number;
@@ -29,7 +29,7 @@ export interface Topping {
 export const data: Data = {
   items: [
     {
-      id: '0001',
+      id: 1,
       type: 'donut',
       name: 'Cake',
       ppu: 0.55,
