@@ -4,11 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
     "test": "vitest"
   },
   "dependencies": {
     "fp-ts": "^2.16.0",
-    "monocle-ts": "^2.3.13"
+    "monocle-ts": "^2.3.13",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rxjs": "^7.8.0"
   },
   "repository": {
     "type": "git",
@@ -21,12 +28,18 @@
   },
   "homepage": "https://github.com/goce-cz/structy#readme",
   "devDependencies": {
-    "@types/react": "^18.0.28",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
     "@spicy-hooks/core": "^3.0.0",
     "@spicy-hooks/observables": "^3.0.0",
     "@spicy-hooks/utils": "^3.0.0",
-    "rxjs": "^7.8.0",
-    "typescript": "^4.9.5",
-    "vitest": "^0.28.4"
+    "@vitejs/plugin-react": "^4.0.1",
+    "eslint": "^8.43.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.5",
+    "vite": "^4.3.9",
+    "vitest": "^0.32.2"
   }
 }
