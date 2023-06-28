@@ -6,6 +6,10 @@
   "scripts": {
     "test": "vitest"
   },
+  "dependencies": {
+    "fp-ts": "^2.16.0",
+    "monocle-ts": "^2.3.13"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/goce-cz/structy.git"

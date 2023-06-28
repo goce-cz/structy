@@ -1,3 +1,5 @@
+import {Lens} from "monocle-ts";
+
 export type Resolver<P, C> = (parent: P) => C
 export type Updater<P, C> = (parent: P, value: C) => P
 
