@@ -1,51 +1,24 @@
-import {BehaviorSubject} from "rxjs";
-import {Data, currentUserL, usersL} from "./optics";
+import { BehaviorSubject } from 'rxjs'
+import * as L from 'monocle-ts/Lens'
+import { Data, usersL } from './model.ts'
 
-import "./styles.css";
-import {useMemo} from "react";
-import {bindOptic} from "./bound-optic";
-import {UsersManager} from "./UsersManager.tsx";
+import './styles.css'
+import { bindOptic } from './rxjs/bind-optic.ts'
+import { UsersManager } from './components/app-specific/UsersManager.tsx'
+import { pipeBoundOptic } from './rxjs/pipe-bound-optic.ts'
+import { data } from './data.ts'
 
-const data$ = new BehaviorSubject<Data>({
-    currentUser: {
-        id: 1,
-        name: "Homer Simpson",
-        address: {
-            street: "Evergreen Terrace",
-            city: "Springfield"
-        },
-        age: 37
-    },
-    users: [
-        {
-            id: 1,
-            name: "Homer Simpson",
-            address: {
-                street: "Evergreen Terrace",
-                city: "Springfield"
-            },
-            age: 37
-        },
-        {
-            id: 2,
-            name: "Marge Simpson",
-            address: {
-                street: "Evergreen Terrace",
-                city: "Springfield"
-            },
-            age: 35
-        }
-        ]
-});
+const data$ = new BehaviorSubject<Data>(data)
+
+const dataOptic = bindOptic(L.id<Data>(), data$)
+// const currentUserOptic = pipeBoundOptic(dataOptic, L.compose(currentUserL))
+const usersOptic = pipeBoundOptic(dataOptic, L.compose(usersL))
 
 export default function App() {
-    const currentUserOptic = useMemo(() => bindOptic(currentUserL, data$), []);
-    const usersOptic = useMemo(() => bindOptic(usersL, data$), []);
-
-    return (
-        <div className="App">
-            <UsersManager usersOptic={usersOptic}/>
-            {/*<UserEditor userOptic={currentUserOptic} title='Current user'/>*/}
-        </div>
-    );
+  return (
+    <div className="App">
+      <UsersManager usersLens={usersOptic} />
+      {/*<UserEditor userOptic={currentUserOptic} title='Current user'/>*/}
+    </div>
+  )
 }

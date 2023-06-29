@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "pretify": "prettier --write .",
     "preview": "vite preview",
     "test": "vitest"
   },
@@ -34,9 +34,7 @@
     "@spicy-hooks/observables": "^3.0.0",
     "@spicy-hooks/utils": "^3.0.0",
     "@vitejs/plugin-react": "^4.0.1",
-    "eslint": "^8.43.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.1",
+    "prettier": "^2.8.8",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.5",
     "vite": "^4.3.9",
