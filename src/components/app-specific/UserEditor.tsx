@@ -2,9 +2,9 @@ import { BoundOptic } from '../../rxjs/bind-optic.ts'
 import { User, ageL, nameL, ALL_PERMISSIONS } from '../../model.ts'
 import * as L from 'monocle-ts/Lens'
 import { memo, useMemo } from 'react'
-import { Slider } from '../primitives/Slider.tsx'
+import { FocusedSlider } from '../primitives/FocusedSlider.tsx'
 import { useFocusedValue } from '../../focuses/use-focused-value.ts'
-import { TextInput } from '../primitives/TextInput.tsx'
+import { FocusedTextField } from '../primitives/FocusedTextField.tsx'
 import { TagToggle } from '../primitives/TagToggle.tsx'
 import { focusLens } from '../../rxjs/focus-operator.ts'
 import { useSnapshot } from '@spicy-hooks/observables'
@@ -42,10 +42,10 @@ export const UserEditor = memo<{
       <h1>{title}</h1>
       <p>editing user {name}</p>
       <div>
-        <Slider valueLens={ageLens} />
+        <FocusedSlider valueLens={ageLens} />
       </div>
       <div>
-        <TextInput valueLens={nameLens} />
+        <FocusedTextField valueLens={nameLens} />
       </div>
       <div>
         <h2>Permissions</h2>

@@ -2,7 +2,7 @@ import { ReactNode, useMemo } from 'react'
 import { BoundOptic } from '../../rxjs/bind-optic.ts'
 import * as L from 'monocle-ts/Lens'
 import { elementIncluded } from '../../monocle/element-included.ts'
-import { Checkbox } from './Checkbox.tsx'
+import { FocusedCheckbox } from './FocusedCheckbox.tsx'
 import { pipeBoundOptic } from '../../rxjs/pipe-bound-optic.ts'
 
 export interface TagToggleProps<T> {
@@ -21,5 +21,5 @@ export const TagToggle = <T,>({
     [listLens, tag]
   )
 
-  return <Checkbox checkedLens={includedOptic}>{children}</Checkbox>
+  return <FocusedCheckbox valueLens={includedOptic}>{children}</FocusedCheckbox>
 }

@@ -1,5 +1,5 @@
 import { createContext, FC, ReactNode, useContext, useMemo } from 'react'
-import { AdapterErrorState } from '../../adapters/adapter-tuple.ts'
+import { AdapterErrorState } from '../../adapters/adapter.ts'
 import { BehaviorSubject } from 'rxjs'
 
 export interface IdentifiableAdapterErrorState {

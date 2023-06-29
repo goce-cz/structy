@@ -1,4 +1,4 @@
-import { AdapterErrorState } from './adapter-tuple.ts'
+import { AdapterErrorState } from './adapter.ts'
 import { useCallback, useRef, useState } from 'react'
 import { Observable } from 'rxjs'
 import { useSubscription } from '@spicy-hooks/observables'

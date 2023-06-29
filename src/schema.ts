@@ -7,7 +7,7 @@ const userSchema: JSONSchemaType<User> = {
   type: 'object',
   properties: {
     id: { type: 'number' },
-    name: { type: 'string' },
+    name: { type: 'string', minLength: 1 },
     age: { type: 'number', maximum: 90 },
     address: {
       type: 'object',

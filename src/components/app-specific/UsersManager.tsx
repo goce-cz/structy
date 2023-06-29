@@ -6,6 +6,13 @@ import { useFocusedValue } from '../../focuses/use-focused-value.ts'
 import { UserEditor } from './UserEditor.tsx'
 import { Fold } from '../../guards/Fold.tsx'
 import { pipeBoundOptic } from '../../rxjs/pipe-bound-optic.ts'
+import {
+  Button,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from '@mui/material'
 
 export const UsersManager: FC<{
   usersLens: BoundOptic<L.Lens<any, readonly User[]>>
@@ -34,14 +41,18 @@ export const UsersManager: FC<{
         )}
       </Fold>
       <div>
-        <ul>
+        <List>
           {users.map((user) => (
-            <li key={user.id} onClick={() => setSelectedUserId(user.id)}>
-              {user.name}
-            </li>
+            <ListItem key={user.id}>
+              <ListItemButton onClick={() => setSelectedUserId(user.id)}>
+                <ListItemText primary={user.name} />
+              </ListItemButton>
+            </ListItem>
           ))}
-        </ul>
-        <button onClick={() => setSelectedUserId(undefined)}>Unselect</button>
+        </List>
+        <Button variant="outlined" onClick={() => setSelectedUserId(undefined)}>
+          Unselect
+        </Button>
       </div>
     </div>
   )
