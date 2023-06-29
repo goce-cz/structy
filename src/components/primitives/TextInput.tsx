@@ -6,7 +6,15 @@ import { useValueAdapter } from '../../adapters/use-value-adapter.ts'
 export const TextInput: FC<{
   valueLens: BoundOptic<L.Lens<any, string>>
 }> = ({ valueLens }) => {
-  const [value, handleChange] = useValueAdapter(valueLens, String)
+  const { value, handleChange, isError, errorMessage } = useValueAdapter(
+    valueLens,
+    String
+  )
 
-  return <input type="text" value={value} onChange={handleChange} />
+  return (
+    <>
+      <input type="text" value={value} onChange={handleChange} />
+      {isError && <div>{errorMessage}</div>}
+    </>
+  )
 }

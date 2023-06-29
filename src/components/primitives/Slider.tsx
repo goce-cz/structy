@@ -8,15 +8,21 @@ export interface SliderProps {
 }
 
 export const Slider: FC<SliderProps> = ({ valueLens }) => {
-  const [value, handleChange] = useValueAdapter(valueLens, Number)
+  const { value, handleChange, isError, errorMessage } = useValueAdapter(
+    valueLens,
+    Number
+  )
 
   return (
-    <input
-      type="range"
-      min={0}
-      max={100}
-      value={value}
-      onChange={handleChange}
-    />
+    <>
+      <input
+        type="range"
+        min={0}
+        max={100}
+        value={value}
+        onChange={handleChange}
+      />
+      {isError && <div>{errorMessage}</div>}
+    </>
   )
 }

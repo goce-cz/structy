@@ -1,5 +1,5 @@
 import { BoundOptic } from '../../rxjs/bind-optic.ts'
-import { User, ageL, nameL, Permission } from '../../model.ts'
+import { User, ageL, nameL, ALL_PERMISSIONS } from '../../model.ts'
 import * as L from 'monocle-ts/Lens'
 import { memo, useMemo } from 'react'
 import { Slider } from '../primitives/Slider.tsx'
@@ -10,8 +10,6 @@ import { focusLens } from '../../rxjs/focus-operator.ts'
 import { useSnapshot } from '@spicy-hooks/observables'
 import { debounceTime, distinctUntilChanged } from 'rxjs'
 import { pipeBoundOptic } from '../../rxjs/pipe-bound-optic.ts'
-
-const ALL_PERMISSIONS: Permission[] = ['emails', 'contracts', 'accounting']
 
 export const UserEditor = memo<{
   userLens: BoundOptic<L.Lens<any, User>>

@@ -7,12 +7,14 @@ export const Checkbox: FC<{
   checkedLens: BoundOptic<L.Lens<any, boolean>>
   children: ReactNode
 }> = ({ checkedLens, children }) => {
-  const [checked, handleChange] = useCheckedAdapter(checkedLens)
+  const { value, handleChange, isError, errorMessage } =
+    useCheckedAdapter(checkedLens)
 
   return (
     <label>
-      <input type="checkbox" checked={checked} onChange={handleChange} />
+      <input type="checkbox" checked={value} onChange={handleChange} />
       {children}
+      {isError && <div>{errorMessage}</div>}
     </label>
   )
 }

@@ -1,6 +1,10 @@
 import * as L from 'monocle-ts/Lens'
 import { pipe } from 'fp-ts/function'
 
+export const ALL_PERMISSIONS = ['emails', 'contracts', 'accounting'] as const
+
+export type Permission = (typeof ALL_PERMISSIONS)[number]
+
 export interface Address {
   street: string
   city: string
@@ -18,8 +22,6 @@ export interface Data {
   currentUser: User
   users: readonly User[]
 }
-
-export type Permission = 'contracts' | 'emails' | 'accounting'
 
 export const currentUserL = pipe(L.id<Data>(), L.prop('currentUser'))
 export const usersL = pipe(L.id<Data>(), L.prop('users'))
