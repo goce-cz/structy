@@ -7,7 +7,7 @@ export interface IdentifiableAdapterErrorState {
   identity: {}
 }
 
-export type ErrorFormatter = (error: Error) => string
+export type ErrorFormatter = (error: Error) => ReactNode
 
 export const defaultErrorFormatter: ErrorFormatter = (error) => error.message
 

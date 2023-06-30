@@ -1,8 +1,8 @@
-import { ChangeEventHandler, Dispatch, SetStateAction } from 'react'
+import { ChangeEventHandler, Dispatch, ReactNode, SetStateAction } from 'react'
 
 export interface AdapterErrorState {
   isError: boolean
-  errorMessage?: string
+  errorMessage?: ReactNode
   error?: Error
 }
 
