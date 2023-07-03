@@ -12,7 +12,7 @@ interface AdapterErrorStateControllerWithSetter<T>
   setValue: Dispatch<SetStateAction<T>>
 }
 
-export const useErrorStateKeepingSetter = <T>(
+export const useCaughtSetter = <T>(
   valueLens: BoundOptic<L.Lens<any, T>>
 ): AdapterErrorStateControllerWithSetter<T> => {
   const setValueRaw = useFocusedSetter(valueLens)

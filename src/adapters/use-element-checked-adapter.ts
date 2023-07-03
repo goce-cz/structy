@@ -1,15 +1,26 @@
 import { BoundOptic } from '../rxjs/bind-optic.ts'
 import * as L from 'monocle-ts/Lens'
-import { ChangeEventHandler, useCallback } from 'react'
+import {
+  ChangeEventHandler,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+} from 'react'
 import { useFocusedValue } from '../focuses/use-focused-value.ts'
-import { LensInputAdapter } from './adapter.ts'
-import { useErrorStateKeepingSetter } from './use-error-state-keeping-setter.ts'
+import { useCaughtSetter } from './use-caught-setter.ts'
+import { AdapterErrorState } from './use-error-state.ts'
+
+export interface ElementValueAdapter extends AdapterErrorState {
+  value: boolean
+  handleChange: ChangeEventHandler<HTMLInputElement>
+  setValue: Dispatch<SetStateAction<boolean>>
+}
 
 export const useElementCheckedAdapter = (
   checkedLens: BoundOptic<L.Lens<any, boolean>>
-): LensInputAdapter<HTMLInputElement, boolean> => {
+): ElementValueAdapter => {
   const checked = useFocusedValue(checkedLens)
-  const { setValue, errorState } = useErrorStateKeepingSetter(checkedLens)
+  const { setValue, errorState } = useCaughtSetter(checkedLens)
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = useCallback(
     (event) => setValue(event.target.checked),
@@ -18,8 +29,7 @@ export const useElementCheckedAdapter = (
   return {
     value: checked,
     handleChange,
-    rawValue: checked,
-    setRawValue: setValue,
+    setValue,
     ...errorState,
   }
 }

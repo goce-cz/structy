@@ -2,7 +2,7 @@ import { Lens } from 'monocle-ts/Lens'
 import { useCallback } from 'react'
 import { BoundOptic } from '../../rxjs/bind-optic.ts'
 import { FormHelperText, Slider, SliderProps } from '@mui/material'
-import { useErrorStateKeepingSetter } from '../../adapters/use-error-state-keeping-setter.ts'
+import { useCaughtSetter } from '../../adapters/use-caught-setter.ts'
 import { useFocusedValue } from '../../focuses/use-focused-value.ts'
 
 export interface FocusedSliderProps<T extends number | number[]>
@@ -22,7 +22,7 @@ export const FocusedSlider = <T extends number | number[]>({
   const {
     setValue,
     errorState: { errorMessage, isError },
-  } = useErrorStateKeepingSetter(valueLens)
+  } = useCaughtSetter(valueLens)
   const handleChange = useCallback(
     (_: unknown, value: number | number[]) => {
       setValue(value as T)

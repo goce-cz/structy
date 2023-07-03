@@ -1,8 +1,13 @@
-import { AdapterErrorState } from './adapter.ts'
-import { useCallback, useRef, useState } from 'react'
+import { ReactNode, useCallback, useRef, useState } from 'react'
 import { Observable } from 'rxjs'
 import { useSubscription } from '@spicy-hooks/observables'
 import { useClosestAdapterErrorBoundary } from '../components/system/AdapterErrorBoundary.tsx'
+
+export interface AdapterErrorState {
+  isError: boolean
+  errorMessage?: ReactNode
+  error?: Error
+}
 
 export interface AdapterErrorStateController {
   errorState: AdapterErrorState
@@ -28,7 +33,7 @@ export const useErrorState = (
         errorMessage: boundary.formatError(error),
       }
       boundary.errorState$.next({
-        identity: resetIdentityRef.current,
+        origin: resetIdentityRef.current,
         errorState: newErrorState,
       })
       setErrorState(newErrorState)
@@ -38,7 +43,7 @@ export const useErrorState = (
 
   const clearError = useCallback(() => {
     boundary.errorState$.next({
-      identity: resetIdentityRef.current,
+      origin: resetIdentityRef.current,
       errorState: NO_ERROR,
     })
     setErrorState(NO_ERROR)
@@ -55,8 +60,8 @@ export const useErrorState = (
   useSubscription(
     boundary.errorState$,
     {
-      next: ({ identity }) => {
-        if (identity !== resetIdentityRef.current) {
+      next: ({ origin }) => {
+        if (origin !== resetIdentityRef.current) {
           setErrorState(NO_ERROR)
         }
       },

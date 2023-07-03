@@ -52,9 +52,11 @@ const acquire = <T>(arg: LazyArg<T> | T) => {
   return isFunction(arg) ? arg() : arg
 }
 
+export const naturalCompare = <T>(a: T, b: T) => (a === b ? 0 : a > b ? 1 : -1)
+
 export const elementIncluded = <E>(
   element: LazyArg<E> | E,
-  compare: CompareFn<E> = (a, b) => (a === b ? 0 : a > b ? 1 : -1)
+  compare: CompareFn<E> = naturalCompare
 ) =>
   L.compose(
     L.lens<readonly E[], boolean>(

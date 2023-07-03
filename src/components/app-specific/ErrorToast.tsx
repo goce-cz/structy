@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useClosestAdapterErrorBoundary } from '../system/AdapterErrorBoundary.tsx'
 import { useSnapshot } from '@spicy-hooks/observables'
+import { Alert } from '@mui/material'
 
 export const ErrorToast: FC = () => {
   const { errorState$, clearError } = useClosestAdapterErrorBoundary()
@@ -11,9 +12,8 @@ export const ErrorToast: FC = () => {
   }
 
   return (
-    <div>
-      <span>{errorState.errorMessage}</span>
-      <button onClick={clearError}>X</button>
-    </div>
+    <Alert severity="error" onClose={clearError}>
+      {errorState.errorMessage}
+    </Alert>
   )
 }

@@ -1,11 +1,10 @@
 import { BoundOptic } from '../rxjs/bind-optic.ts'
 import { Dispatch, SetStateAction, useCallback } from 'react'
-import { isNone } from 'fp-ts/Option'
+import * as L from 'monocle-ts/Lens'
 import { isFunction } from '@spicy-hooks/utils'
-import { isOptional, Optic } from '../monocle/optic.ts'
 
 export const useFocusedSetter = <S, T>(
-  boundOptic: BoundOptic<Optic<S, T>>
+  boundOptic: BoundOptic<L.Lens<S, T>>
 ): Dispatch<SetStateAction<T>> => {
   return useCallback<Dispatch<SetStateAction<T>>>(
     (setStateAction) => {
@@ -14,16 +13,7 @@ export const useFocusedSetter = <S, T>(
       let modifiedTarget: T
       if (isFunction(setStateAction)) {
         const originalSource = store.getValue()
-        let originalTarget: T
-        if (isOptional(optic)) {
-          const option = optic.getOption(originalSource)
-          if (isNone(option)) {
-            throw new Error('not initialized') // TODO Handle differently?
-          }
-          originalTarget = option.value
-        } else {
-          originalTarget = optic.get(originalSource)
-        }
+        const originalTarget = optic.get(originalSource)
         modifiedTarget = setStateAction(originalTarget)
       } else {
         modifiedTarget = setStateAction

@@ -4,7 +4,7 @@ import * as L from 'monocle-ts/Lens'
 import { FC, useMemo, useState } from 'react'
 import { useFocusedValue } from '../../focuses/use-focused-value.ts'
 import { UserEditor } from './UserEditor.tsx'
-import { Fold } from '../../guards/Fold.tsx'
+import { Fold } from '../system/Fold.tsx'
 import { pipeBoundOptic } from '../../rxjs/pipe-bound-optic.ts'
 import {
   Button,

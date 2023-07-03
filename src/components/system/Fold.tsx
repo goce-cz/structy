@@ -1,10 +1,10 @@
 import { ReactNode, useMemo } from 'react'
-import { BoundOptic } from '../rxjs/bind-optic.ts'
+import { BoundOptic } from '../../rxjs/bind-optic.ts'
 import * as O from 'monocle-ts/Optional'
 import * as L from 'monocle-ts/Lens'
 import { isNone } from 'fp-ts/lib/Option'
-import { useIsSome } from '../focuses/use-is-some.ts'
-import { pipeBoundOptic } from '../rxjs/pipe-bound-optic.ts'
+import { useIsSome } from '../../focuses/use-is-some.ts'
+import { pipeBoundOptic } from '../../rxjs/pipe-bound-optic.ts'
 
 interface FoldProps<S, T> {
   optionalOptic: BoundOptic<O.Optional<S, T>>

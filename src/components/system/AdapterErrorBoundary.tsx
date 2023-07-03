@@ -1,10 +1,10 @@
 import { createContext, FC, ReactNode, useContext, useMemo } from 'react'
-import { AdapterErrorState } from '../../adapters/adapter.ts'
 import { BehaviorSubject } from 'rxjs'
+import { AdapterErrorState } from '../../adapters/use-error-state.ts'
 
-export interface IdentifiableAdapterErrorState {
+export interface AdapterErrorStateWithOrigin {
   errorState: AdapterErrorState
-  identity: {}
+  origin: {}
 }
 
 export type ErrorFormatter = (error: Error) => ReactNode
@@ -12,20 +12,20 @@ export type ErrorFormatter = (error: Error) => ReactNode
 export const defaultErrorFormatter: ErrorFormatter = (error) => error.message
 
 export interface AdapterErrorBoundaryContextValue {
-  errorState$: BehaviorSubject<IdentifiableAdapterErrorState>
+  errorState$: BehaviorSubject<AdapterErrorStateWithOrigin>
   formatError: ErrorFormatter
   clearError: () => void
 }
 
-const NO_ERROR_STATE: IdentifiableAdapterErrorState = {
-  identity: {},
+const NO_ERROR_STATE: AdapterErrorStateWithOrigin = {
+  origin: {},
   errorState: { isError: false },
 }
 
 const createNewAdapterErrorBoundaryContextValue = (
   errorFormatter: ErrorFormatter
 ): AdapterErrorBoundaryContextValue => {
-  const errorState$ = new BehaviorSubject<IdentifiableAdapterErrorState>(
+  const errorState$ = new BehaviorSubject<AdapterErrorStateWithOrigin>(
     NO_ERROR_STATE
   )
   return {
